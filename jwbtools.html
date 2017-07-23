@@ -4,16 +4,17 @@
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   </head>
   <body>
-   <h1>导出iOS课表 - zjujwbtools</h1>  
+   <h1>浙大课表导出 - zjujwbtools</h1>  
+   <p> 将浙江大学教务网课程导出为 iCalendar 文件（可用于 iCal、Google Calendar、Win10日历 等）</p>
    <table>   
-    <form action="/grab" method="post">
+    <form action="https://api.py3.io/jwbtools" method="post">
      <tr>
       <td>学号: </td>
-      <td><input type="text" name="zju_username"/></td>
+      <td><input type="text" name="username"/></td>
      </tr>
      <tr>
       <td>教务网密码: </td>
-      <td><input type="password" name="zju_password"/></td>
+      <td><input type="password" name="password"/></td>
      </tr>
      <tr>
       <td colspan="2"><input type="submit" value="导出你的课表文件"></td>
@@ -41,7 +42,7 @@
 </pre>
 </td>
 <td>
-<img src="//up366.b0.upaiyun.com/ZJU%E6%97%A5%E5%8E%86.png" height="400px">
+<img src="https://up366.b0.upaiyun.com/ZJU%E6%97%A5%E5%8E%86.png" height="400px">
 </td>
 </tr>
 </table>
@@ -50,11 +51,13 @@
    </p> 
 
    <p>
-    Forked from https://github.com/xhacker/zju-jwb-to-icalendar
+    Github (welcome for star, issue and PR): <a href="https://github.com/zjuchenyuan/zju-jwb-to-icalendar">https://github.com/zjuchenyuan/zju-jwb-to-icalendar</a>. <br>
+    Author: <a href="https://github.com/xhacker/zju-jwb-to-icalendar">xhacker</a> & cMc_SARS & zjuchenyuan <br>
+    Maintainer: <a href="https://py3.io">@zjuchenyuan</a> QQ:1535454882
    </p>
    
    <hr/>
-   Last updated: 2016-09-19
+   Last updated: 2017-07-23
    <br>
   </body>
 </html>
