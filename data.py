@@ -8,9 +8,22 @@ from pytz import timezone
 '''
 
 # date of the first Monday
-week_start = date(2014, 2, 24)
+week_start_2013_2 = date(2014, 2, 24)
+week_start_2014_1 = date(2014, 9, 22)
+week_start_2014_2 = date(2015, 3, 9)
+week_start_2015_1 = date(2015, 9, 14)
+week_start_2015_2 = date(2016, 2, 29)
+week_start_2016_1 = date(2016, 9, 12)
+week_start_2016_2 = date(2017, 2, 27)
+week_start_2017_1 = date(2017, 9, 18)
+week_start_2017_2 = date(2018, 3, 5)
 
-week_data = {
+
+exam_year = '2017-2018' #记得改这里
+week_start = week_start_2017_1  #记得改这里
+exam_semester = u'1|冬'#可选：1|秋，1|冬，2|春，2|夏
+
+week_data= {
     u"春": {
         "odd":  [1, 3, 5, 7],
         "even": [2, 4, 6, 8],
@@ -26,8 +39,22 @@ week_data = {
         "even": [2, 4, 6, 8, 11, 13, 15, 17],
         "all":  [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17],
     },
+    u"秋": {
+        "odd":  [1, 3, 5, 7],
+        "even": [2, 4, 6, 8],
+        "all":  [1, 2, 3, 4, 5, 6, 7, 8],
+    },
+    u"冬": {
+        "odd":  [10, 12, 14, 16],
+        "even": [11, 13, 15, 17],
+        "all":  [10, 11, 12, 13, 14, 15, 16, 17],
+    },
+    u"秋冬": {
+        "odd":  [1, 3, 5, 7, 10, 12, 14, 16],
+        "even": [2, 4, 6, 8, 11, 13, 15, 17],
+        "all":  [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17],
+    },
 }
-
 
 def time_shanghai(h, m):
     return time(h, m, tzinfo=timezone('Asia/Shanghai'))

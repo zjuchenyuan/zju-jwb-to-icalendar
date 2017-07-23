@@ -1,4 +1,5 @@
-requests
-beautifulsoup4
-PyYAML
+bs4
 icalendar
+pytz
+requests==2.11.1
+six
