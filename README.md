@@ -23,7 +23,7 @@ ZJU jwb to iCalendar
 
 ```
 from grabber import grabber
-grabber("你的学号", "你的教务网密码", "./") #其中最后一个参数为输出ics文件存储位置
+grabber("你的学号", "你的教务网密码", "./output.ics") #其中最后一个参数为输出ics的路径，文件名后缀需要为ics
 ```
 
 ## 部署方法
