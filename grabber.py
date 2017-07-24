@@ -221,7 +221,6 @@ class TeapotParser():
     def run_exam(self, a):
         url_exam = self.url_prefix + "xskscx.aspx?xh=" + self.username
         r_exam = a.get(url_exam, o=True)
-        open("test2.txt","wb").write(r_exam.content)
         exams = []
 
         if u"调查问卷".encode(self.charset) in r_exam.content:
@@ -234,7 +233,6 @@ class TeapotParser():
         exams += self.get_exams(rows)
         data = """__EVENTTARGET=xqd&__EVENTARGUMENT=&__VIEWSTATE={VIEWSTATE}&xnd={exam_year}&xqd={xueqi}""".format(VIEWSTATE=a.VIEWSTATE(), exam_year=exam_year, xueqi=quote(exam_semester.encode(self.charset)))
         r_exam = a.post(url_exam, data=data, headers={'Content-Type': 'application/x-www-form-urlencoded;'})
-        open("test.txt","wb").write(r_exam.content)
         strainer = SoupStrainer("table", id="DataGrid1")
         soup = BeautifulSoup(r_exam.content.decode(self.charset), "html.parser",parse_only=strainer)
         rows = soup.select("tr")
@@ -336,4 +334,10 @@ def grabber(xh,password,outputfile=""):
     return "Dumped successfully."
 
 if __name__ == "__main__":
-    print('please import this file and use function grabber(xh,password,outputfile)')
+    if len(sys.argv)<2:
+        print('usage: python2 grabber.py username password')
+        exit(1)
+    try:
+        print(grabber(sys.argv[1], sys.argv[2], "./output.ics"))
+    except Exception as e:
+        print(e)

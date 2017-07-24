@@ -19,12 +19,12 @@ ZJU jwb to iCalendar
 
 ## 本地使用
 
-[下载本项目](https://codeload.github.com/zjuchenyuan/zju-jwb-to-icalendar/zip/master)后，运行python2
+[下载本项目](https://codeload.github.com/zjuchenyuan/zju-jwb-to-icalendar/zip/master)后，运行以下命令，将把`output.ics`文件生成在当前目录
 
 ```
-from grabber import grabber
-grabber("你的学号", "你的教务网密码", "./output.ics") #其中最后一个参数为输出ics的路径，文件名后缀需要为ics
+python2 grabber.py 你的学号 你的教务网密码
 ```
+
 
 ## 部署方法
 
@@ -32,7 +32,7 @@ grabber("你的学号", "你的教务网密码", "./output.ics") #其中最后�
 
 * 注册[阿里云](https://promotion.aliyun.com/ntms/act/ambassador/sharetouser.html?userCode=x20mh6hn&productCode=vm)、[又拍云](https://console.upyun.com/register/?invite=Sku7XUArZ), 并完成相关实名认证等操作
 * 一个已经备案的域名(这里我用api.py3.io)
-* 准备好相应https证书，如果使用又拍云只需要鼠标点击，否则可以使用阿里云证书服务申请到免费1年的Symantec证书，或者自行申请Let's encrypt证书：参见[教程-获得Let's encrypt免费https证书](https://py3.io/Nginx.html#lets-encrypthttps)
+* 准备好相应https证书，如果使用又拍云可以CNAME后在线免费申请Let's encrypt证书，也可以使用阿里云证书服务申请到免费1年的Symantec证书，还可以自行申请Let's encrypt证书：参见[教程-获得Let's encrypt免费https证书](https://py3.io/Nginx.html#lets-encrypthttps)
 * Linux 64位 环境，可以用Bash on Win10
 
 ### 2.配置阿里云函数计算
@@ -111,7 +111,7 @@ $ ./fcli shell
 
 #### 定义API后端服务
 
-后端服务类型选FunctionCompute，区域选华东2(上海)(与前述一致)，Serive填函数计算的服务名称(apipy3io)，Function填函数名称(jwbtools)，RoleArn不要填点击右侧`获取授权`一键填写，后端超时填30000ms表示30s，Content-Type保持默认，Mock不使用Mock；填完后下一步
+后端服务类型选FunctionCompute，区域选华东2(上海)(与前述一致)，Service填函数计算的服务名称(apipy3io)，Function填函数名称(jwbtools)，RoleArn不要填点击右侧`获取授权`一键填写，后端超时填30000ms表示30s，Content-Type保持默认，Mock不使用Mock；填完后下一步
 
 #### 定义返回结果
 
@@ -133,9 +133,9 @@ $ ./fcli shell
 
 ### 注意事项，一定要看这里
 
-如果后续修改了API的定义，一定要再次发布才会生效！
+如果后续在API控制台修改了上述`配置API网关`的任何一部分，一定要再次发布才会生效！
 
-如果用fcli传了新的代码，无需再次发布
+如果用fcli传了新的代码(在`fcli shell`中用`rm -f`删除函数后重新`mkf`)，则无需修改API网关
 
 ## 4. 配置https的自定义域名
 
@@ -177,6 +177,10 @@ $ ./fcli shell
 欢迎使用，更欢迎Star~
 
 Welcome for Star, Issue and PR!
+
+# Credits
+
+[@xhacker](https://github.com/xhacker), @cMc_SARS
 
 # LICENSE
 
