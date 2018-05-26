@@ -63,8 +63,9 @@ $ ./fcli shell
 # 第一次启动需要配置账号id, AK 和 SK; 参见：https://help.aliyun.com/document_detail/51783.html
 >>> ls #显示当前的服务列表 #此命令应该会输出apipy3io
 >>> cd apipy3io #进入该服务
->>> mkf jwbtools -d ical --etag 20170723 -h index.index -t python2.7
-# 创建函数，名为jwbtools，代码文件夹为ical，etag可选用于备注本次部署的版本，-h为函数入口 表示index.py中的index函数作为入口，python2.7为代码语言和版本
+>>> mkf jwbtools -d ical -h index.index -t python2.7
+# 创建函数，名为jwbtools，代码文件夹为ical，-h为函数入口 表示index.py中的index函数作为入口，python2.7为代码语言和版本
+# 以后更新代码，上述命令改为upf即可
 ```
 
 进入函数计算控制台，在函数列表中现在能看到新创建的`jwbtools`函数，点击进入后左侧代码执行
