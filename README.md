@@ -84,19 +84,16 @@ $ ./fcli shell
 { "body": "RXJyb3I6IExvZ2luRXJyb3I6IFdyb25nIFN0dWRlbnQgSUQgPGJyPjxhIGhyZWY9J2phdmFzY3JpcHQ6d2luZG93Lmhpc3RvcnkuZ28oLTEpJz7miLPmiJHov5Tlm548L2E+", "headers": { "Content-Type": "text/html; charset=utf-8" }, "isBase64Encoded": true, "statusCode": 500 }
 ```
 
-表示成功部署，对返回的内容感兴趣的你可以自行用linux的`base64 -d`解码返回的`body`内容
+表示成功部署，对返回的内容感兴趣的你可以自行base64解码其中的`body`内容
 
 ## 3.配置API网关
 
-### 阅读[官方文档](https://help.aliyun.com/document_detail/54788.html), 关于本文档，我有几点要说的：
+### 阅读[官方文档](https://help.aliyun.com/document_detail/54788.html),
 
-1. 实现原理的图仔细看，其中API网关向FunctionCompute传入的"body"是json dict string; 函数计算返回可以为302跳转，但返回的headers中的`Content-Type`会被无视；如果函数计算返回的dict不符合API网关的要求，用户会得到空白页面503 Service Unavailable
+注意：
 
-2. 快速配置API中的创建函数部分不能使用其图中的hello world程序，而应该使用其下方3.3示例的撞墙式程序
+实现原理的图仔细看，其中API网关向FunctionCompute传入的"body"是json dict string; 函数计算返回可以为302跳转，~~但返回的headers中的`Content-Type`会被无视~~现在(2018/9)已经支持`透传后端Content-Type`；如果函数计算返回的dict不符合API网关的要求，用户会得到空白页面503 Service Unavailable
 
-3. 其中`2.2配置跨服务授权Role和policy`可以直接跳过，现在可以一键配置 无需手工操作
-
-4. 阅读到`4.多环境`之前即可结束，我们不需要再增加复杂度
 
 读好了文档，我们进入[API网关控制台](https://apigateway.console.aliyun.com/), 在华东2区域(与上述第二步选择的区域一致)，创建分组，分组名称可以与前述的apipy3io重名
 
@@ -108,7 +105,7 @@ $ ./fcli shell
 
 #### 定义API请求
 
-协议HTTP(因为API网关的https好像挂了，即使选择https也不能用)，自定义域名现在不管，请求Path填/jwbtools(与前端一致即可)，HTTP Method选择post；入参定义添加一条：参数名username，参数位置Body，类型String，必填打钩，编辑更多-最大长度10（学号的长度是10），编辑更多-参数验证填`[0-9]+`表示只接受数字输入；再添加一条：参数名password，参数位置Body，类型String，必填
+协议HTTP(因为API网关即使选择https也不能用给的域名访问)，自定义域名选择已经绑定的域名如`api.py3.io`（需要在分组管理中操作），请求Path填/jwbtools(与前端一致即可)，HTTP Method选择post；入参定义添加一条：参数名username，参数位置Body，类型String，必填打钩，编辑更多-最大长度10（学号的长度是10），编辑更多-参数验证填`[0-9]+`表示只接受数字输入；再添加一条：参数名password，参数位置Body，类型String，必填
 
 #### 定义API后端服务
 
@@ -116,7 +113,7 @@ $ ./fcli shell
 
 #### 定义返回结果
 
-返回类型选择HTML（这里选择的其实就是返回给用户的Content-Type，所以函数计算返回的Content-Type会被忽略），返回结果示例和失败返回结果示例随意乱填即可；最后保存
+返回类型选择HTML（这里选择的其实就是返回给用户的Content-Type，也可以保持默认`透传后端Content-Type`），返回结果示例和失败返回结果示例随意填写；最后保存
 
 ### 发布API，别忘了这一步
 
@@ -132,17 +129,15 @@ $ ./fcli shell
 
 然后浏览器打开，提交看看
 
-### 注意事项，一定要看这里
+### 注意事项
 
 如果后续在API控制台修改了上述`配置API网关`的任何一部分，一定要再次发布才会生效！
 
-如果用fcli传了新的代码(在`fcli shell`中用`rm -f`删除函数后重新`mkf`)，则无需修改API网关
+对函数代码进行更新无需修改API网关
 
 ## 4. 配置https的自定义域名
 
-由于目前(2017/07/23)阿里云的API网关的https功能无法使用，所以使用又拍云CDN向外提供服务
-
-登录[又拍云控制台](https://console.upyun.com/dashboard/)，服务-创建服务-全网加速服务：服务名称(apipy3io)，源站类型自主源，加速域名(api.py3.io要求备案)，回源Host填API网关提供的二级域名(78145f4bd729479cb9369c9f565fba80-cn-shanghai.alicloudapi.com), 回源协议HTTP，回源地址也填这个二级域名，其他配置保持默认后创建
+登录[又拍云控制台](https://console.upyun.com/dashboard/)，服务-创建服务-全网加速服务：服务名称(apipy3io)，源站类型自主源，加速域名要求备案(api.py3.io)，回源Host填`API网关绑定的域名`(api.py3.io), 回源协议HTTP，回源地址填填API网关提供的二级域名(78145f4bd729479cb9369c9f565fba80-cn-shanghai.alicloudapi.com)，其他配置保持默认后创建
 
 进入功能配置，看到域名管理给出了CNAME配置 `apipy3io.b0.aicdn.com`，进入域名DNS配置，配置CNAME解析
 
@@ -158,7 +153,7 @@ $ ./fcli shell
 
 既然都用api.py3.io域名作为后端域名了，前端也用它也好
 
-又拍云控制台进入服务，功能配置-高级功能-镜像存储 开启，功能配置-基础功能-已授权管理员-创建操作员并授权
+又拍云控制台进入服务，功能配置-基础功能-已授权管理员-创建操作员并授权
 
 使用FlashFXP等FTP工具或UpYunManager官方工具，ftp连接信息：
 
