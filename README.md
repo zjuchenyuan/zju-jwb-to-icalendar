@@ -7,6 +7,13 @@ ZJU jwb to iCalendar
 
 见[data.py](data.py)，需要配置 `exam_year`, `exam_semester`(考试学期), `week_start`(秋冬/春夏学期的第一周星期一)
 
+For Maintainer: 更新后除了git操作记得要更新函数计算的代码：进入`fcli shell`后
+
+```
+cd apipy3io
+upf jwbtools -d zju-jwb-to-icalendar -h index.index -t python2.7
+```
+
 ## 文件说明
 
 由于后端部署为[阿里云函数计算](https://help.aliyun.com/document_detail/54788.html)，所以需要将所有的依赖包均放入项目中
