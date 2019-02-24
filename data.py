@@ -21,8 +21,8 @@ week_start_2018_1 = date(2018, 9, 17)
 week_start_2018_2 = date(2019, 2, 25)
 
 exam_year = '2018-2019' #记得改这里
-week_start = week_start_2018_1  #记得改这里
-exam_semester = u'1|秋'#可选：1|秋，1|冬，2|春，2|夏
+week_start = week_start_2018_2  #记得改这里
+exam_semester = u'2|春'#可选：1|秋，1|冬，2|春，2|夏
 
 week_data= {
     u"春": {
